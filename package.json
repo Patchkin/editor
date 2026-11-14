@@ -1,0 +1,7 @@
+{
+  "name": "patchkin-editor",
+  "private": true,
+  "description": "Patchkin's editor extension (VS Code, Cursor) and Claude Code plugin",
+  "license": "Apache-2.0",
+  "workspaces": ["packages/editor", "packages/claude"]
+}

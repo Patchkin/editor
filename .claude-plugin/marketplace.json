@@ -1,0 +1,15 @@
+{
+  "name": "patchkin",
+  "owner": {
+    "name": "Patchkin",
+    "email": "dev@thoutam.com"
+  },
+  "description": "Patchkin's Claude Code plugin: tickets, plan approvals and run status from the team board",
+  "plugins": [
+    {
+      "name": "patchkin",
+      "source": "./packages/claude",
+      "description": "Pull Patchkin tickets, start plan-first runs, review plans and report run status"
+    }
+  ]
+}

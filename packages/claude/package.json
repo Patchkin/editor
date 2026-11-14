@@ -1,0 +1,37 @@
+{
+  "name": "@patchkin/claude",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Patchkin MCP server and Claude Code plugin: tickets, plan approvals and run status from Claude Code",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Patchkin",
+    "email": "dev@thoutam.com"
+  },
+  "homepage": "https://patchkin.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Patchkin/editor",
+    "directory": "packages/claude"
+  },
+  "bin": {
+    "patchkin-mcp": "./src/server.mjs",
+    "patchkin-mcp-login": "./src/login.mjs"
+  },
+  "files": [
+    "src",
+    "commands",
+    ".claude-plugin",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node src/server.mjs",
+    "login": "node src/login.mjs",
+    "build": "node --check src/config.mjs && node --check src/format.mjs && node --check src/hub.mjs && node --check src/login.mjs && node --check src/server.mjs && node --check src/tools.mjs",
+    "test": "node --test test/config.test.mjs test/hub.test.mjs test/server.test.mjs test/tools.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

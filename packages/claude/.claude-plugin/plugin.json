@@ -1,0 +1,27 @@
+{
+  "name": "patchkin",
+  "displayName": "Patchkin",
+  "version": "0.1.0",
+  "description": "Pull Patchkin tickets, start plan-first runs, review plans and report run status from Claude Code",
+  "author": {
+    "name": "Patchkin",
+    "email": "dev@thoutam.com",
+    "url": "https://patchkin.io"
+  },
+  "homepage": "https://patchkin.io",
+  "repository": "https://github.com/Patchkin/editor",
+  "license": "Apache-2.0",
+  "keywords": [
+    "patchkin",
+    "tickets",
+    "agents",
+    "plans",
+    "code review"
+  ],
+  "mcpServers": {
+    "patchkin": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/src/server.mjs"]
+    }
+  }
+}

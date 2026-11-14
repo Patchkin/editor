@@ -1,0 +1,226 @@
+{
+  "name": "patchkin",
+  "displayName": "Patchkin",
+  "description": "Patchkin's waiting-for-you queue, plan approvals, review briefs and runs inside VS Code and Cursor",
+  "version": "0.1.0",
+  "publisher": "patchkin",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Patchkin",
+    "email": "dev@thoutam.com"
+  },
+  "homepage": "https://patchkin.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Patchkin/editor",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/Patchkin/editor/issues"
+  },
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "patchkin",
+    "agents",
+    "claude code",
+    "cursor",
+    "code review",
+    "plan approval"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "files": [
+    "dist/**",
+    "media/**",
+    "README.md"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Patchkin",
+      "properties": {
+        "patchkin.hubUrl": {
+          "type": "string",
+          "default": "https://blue.patchkin.io",
+          "description": "Address of your Patchkin hub. Use http:// only for a hub on this machine."
+        },
+        "patchkin.pollSeconds": {
+          "type": "number",
+          "default": 60,
+          "minimum": 15,
+          "description": "How often the queue and runs refresh, in seconds."
+        },
+        "patchkin.notifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a VS Code notification when a run starts waiting for you."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "patchkin",
+          "title": "Patchkin",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "patchkin": [
+        {
+          "id": "patchkin.waiting",
+          "name": "Waiting for you"
+        },
+        {
+          "id": "patchkin.runs",
+          "name": "Runs"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "patchkin.signIn",
+        "title": "Sign in",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.signOut",
+        "title": "Sign out",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.selectTeam",
+        "title": "Select team",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.pairMachine",
+        "title": "Pair this machine",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.refresh",
+        "title": "Refresh",
+        "category": "Patchkin",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "patchkin.startRun",
+        "title": "Start a run from a ticket",
+        "category": "Patchkin",
+        "icon": "$(add)"
+      },
+      {
+        "command": "patchkin.openRun",
+        "title": "Open run",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.readPlan",
+        "title": "Read the plan",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.approveRun",
+        "title": "Approve the run",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.declineRun",
+        "title": "Decline the run",
+        "category": "Patchkin"
+      },
+      {
+        "command": "patchkin.openInPatchkin",
+        "title": "Open in Patchkin",
+        "category": "Patchkin",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "patchkin.focusWaiting",
+        "title": "Show what is waiting for you",
+        "category": "Patchkin"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "patchkin.refresh",
+          "when": "view == patchkin.waiting || view == patchkin.runs",
+          "group": "navigation@1"
+        },
+        {
+          "command": "patchkin.openInPatchkin",
+          "when": "view == patchkin.waiting || view == patchkin.runs",
+          "group": "navigation@2"
+        },
+        {
+          "command": "patchkin.startRun",
+          "when": "view == patchkin.waiting || view == patchkin.runs",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "patchkin.readPlan",
+          "when": "view == patchkin.waiting && viewItem =~ /^run:(awaiting|plan)$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "patchkin.approveRun",
+          "when": "view == patchkin.waiting && viewItem == run:awaiting",
+          "group": "inline@2"
+        },
+        {
+          "command": "patchkin.declineRun",
+          "when": "view == patchkin.waiting && viewItem == run:awaiting",
+          "group": "1_actions@2"
+        },
+        {
+          "command": "patchkin.readPlan",
+          "when": "view == patchkin.runs && viewItem =~ /^run:/",
+          "group": "inline@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "patchkin.openRun",
+          "when": "false"
+        },
+        {
+          "command": "patchkin.readPlan",
+          "when": "false"
+        },
+        {
+          "command": "patchkin.approveRun",
+          "when": "false"
+        },
+        {
+          "command": "patchkin.declineRun",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "watch": "tsc -w -p tsconfig.json",
+    "test": "tsx --test --test-concurrency=1 src/config.test.ts src/client.test.ts src/queue.test.ts src/planHtml.test.ts",
+    "package:vsix": "npm run build && node scripts/package-vsix.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "~1.85.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.0"
+  }
+}
